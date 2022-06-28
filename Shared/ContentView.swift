@@ -4,6 +4,7 @@ extension ContentView {
     enum Page {
         case first
         case second
+        case third
     }
 }
 
@@ -21,6 +22,7 @@ struct ContentView: View {
             switch page {
             case .first: first
             case .second: second
+            case .third: third
             }
         }
                 .onChange(of: page) { page in
@@ -33,6 +35,7 @@ struct ContentView: View {
         withAnimation(.linear(duration: 1)) {
             self.firstAppeared = page == .first
             self.secondAppeared = page == .second
+            self.thirdAppeared = page == .third
         }
     }
 
@@ -53,9 +56,20 @@ struct ContentView: View {
         Second(
             props: .init(
             namespace: namespace,
-            onNext: {setPage(.first)}
+            onNext: {setPage(.third)}
         ),
             appeared: $secondAppeared
+        )
+    }
+
+    @State private var thirdAppeared: Bool = false
+    private var third: some View {
+        Third(
+                props: .init(
+                        namespace: namespace,
+                        onNext: {setPage(.first)}
+                ),
+                appeared: $thirdAppeared
         )
     }
 
